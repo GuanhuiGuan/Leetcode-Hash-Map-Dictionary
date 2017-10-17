@@ -1,0 +1,17 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int, int> dict;
+        vector<int> re;
+        for(int i = 0; i < nums.size(); i++){
+            int x = target - nums[i];
+            if(dict.find(x) != dict.end()){ //if not found, index == last index
+                re.push_back(dict[x]);
+                re.push_back(i);
+                return re;   
+            }
+            dict[nums[i]] = i;
+        }
+        return re;
+    }
+};
