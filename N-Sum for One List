@@ -1,0 +1,36 @@
+class Solution:
+    def fourSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        def nSum(N, nums, target, subList, List):#void return function
+            if(N < 2 or len(nums) < N or N * nums[0] > target or N * nums[-1] < target):#Corner cases or target out of range
+                return;
+            if(N == 2):
+                #2sum
+                i, j = 0, len(nums) - 1;
+                while(i < j):
+                    if(nums[i] + nums[j] == target):
+                        List.append(subList + [nums[i], nums[j]]);
+                        i += 1;
+                        while(i < j and nums[i - 1] == nums[i]):#duplicate elements
+                            i += 1;
+                    elif(nums[i] + nums[j] < target):
+                        i += 1;
+                    else:
+                        j -= 1;
+            else:
+                #reduce to (N-1)sum till 2sum
+                for k in range(len(nums) - N + 1):#how many pairs of size N in nums
+                    if(k == 0 or (k > 0 and nums[k - 1] != nums[k])):#skip duplicate starting element
+                        nSum(N - 1, nums[k + 1:], target - nums[k], subList + [nums[k]], List);
+                    
+        nums = sorted(nums);
+        List = [];
+        nSum(4, nums, target, [], List);
+        return List;
+        
+    
+            
