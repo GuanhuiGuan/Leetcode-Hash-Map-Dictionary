@@ -33,4 +33,43 @@ class Solution:
         return List;
         
     
-            
+//JAVA            
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        //MAIN
+        List<Integer> sublist = new ArrayList<Integer>();
+        List<List<Integer>> LIST = new ArrayList<List<Integer>>();
+        Arrays.sort(nums);
+        nSum(4, nums, target, sublist, LIST);
+        return LIST;
+    }
+    //Define function n-sum
+    public static void nSum(int N, int[] nums, int target, List<Integer> sublist, List<List<Integer>> LIST) {
+        int n = nums.length;
+        if(N < 2 || N > n || target < N * nums[0] || target > N * nums[n - 1]){return;}//corner cases
+        if(N == 2) {//2-sum
+            int i = 0, j = n - 1;
+            while(i < j){
+                if(nums[i] + nums[j] == target){
+                    List<Integer> newsub = new ArrayList<Integer>(sublist);//preserve the previous sublist
+                    newsub.add(nums[i]);
+                    newsub.add(nums[j]);
+                    LIST.add(newsub);
+                    i++;
+                    while(i < j && nums[i] == nums[i - 1]){i++;}//skip duplicates
+                }
+                else if(nums[i] + nums[j] < target){i++;}
+                else{j--;}
+            }
+        }
+        else{//reduce to N-1
+            for(int k = 0; k < n - N + 1; k++){
+                if(k == 0 || (k > 0 && nums[k] != nums[k - 1])){//skip duplicate first element
+                    List<Integer> newsub = new ArrayList<Integer>(sublist);
+                    newsub.add(nums[k]);
+                    nSum(N - 1, Arrays.copyOfRange(nums, k + 1, n), target - nums[k], newsub, LIST);
+                }
+            }
+        }
+    }
+}
