@@ -1,0 +1,38 @@
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n = nums.length;
+        HashMap<Integer, Integer> dict = new HashMap<Integer, Integer>();
+        for(int i = 0; i < n; i++){
+            if(dict.get(nums[i]) == null){dict.put(nums[i], 1);}
+            else{
+                int t = dict.get(nums[i]);
+                dict.put(nums[i], ++t);
+            }
+            
+            if(dict.get(nums[i]) > n / 2){
+                return nums[i];
+            }
+        }
+        return nums[n - 1];
+    }
+}
+
+//Simpler: Fast Majority Vote Algorithm(Assume a majority exists)
+class Solution {
+    public int majorityElement(int[] nums) {//majority vote
+        int n = nums.length;
+        int counter = 0;
+        int maj = nums[0];
+        for(int i = 0; i < n; i++){
+            if(counter == 0){
+                maj = nums[i];
+                counter++;
+            }
+            else if(nums[i] == maj){
+                counter++;
+            }
+            else{counter--;}
+        }
+        return maj;
+    }
+}
